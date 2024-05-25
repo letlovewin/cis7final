@@ -30,6 +30,7 @@ private:
 public:
     Graph(string name);
     string getName();
+    float getWeight(T u, T v);
     void setName(string name);
     void addVertex(T ID);
     void removeVertex(T ID);
@@ -55,6 +56,19 @@ string
 Graph<T>::getName()
 {
     return graphName;
+}
+
+template <typename T>
+float
+Graph<T>::getWeight(T u, T v) {
+    if(adjacency_list.count(u) == 0)
+        throw invalid_argument("Provided vertex does not exist in Graph " + graphName);
+    for(int i = 0; i < adjacency_list[u].size(); i++) {
+        if(get<0>(adjacency_list[u][i]) == v) {
+            return get<1>(adjacency_list[u][i]);
+        }
+    }
+    throw invalid_argument("Provided edge does not exist in Graph " + graphName);
 }
 
 template <typename T>
